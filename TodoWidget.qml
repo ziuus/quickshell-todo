@@ -38,10 +38,10 @@ PanelWindow {
     }
 
     // Theme Palette (Catppuccin Mocha Tonalspot)
-    readonly property color colSurface: "#1e1d22"
-    readonly property color colSurfaceLow: "#161519"
-    readonly property color colSurfaceHigh: "#2a292e"
-    readonly property color colSurfaceHighest: "#353438"
+    readonly property color colSurface: "#801e1d22"
+    readonly property color colSurfaceLow: "#80161519"
+    readonly property color colSurfaceHigh: "#992a292e"
+    readonly property color colSurfaceHighest: "#99353438"
     readonly property color colText: "#e5e1e7"
     readonly property color colTextVariant: "#c8c5d1"
     readonly property color colOutline: "#47464f"
