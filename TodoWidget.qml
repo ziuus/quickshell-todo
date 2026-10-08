@@ -26,7 +26,7 @@ PanelWindow {
     }
 
     implicitWidth: 360
-    implicitHeight: 640
+    implicitHeight: mainCard.height
 
     color: "transparent"
 
