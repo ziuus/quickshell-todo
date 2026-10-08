@@ -26,7 +26,7 @@ PanelWindow {
     }
 
     implicitWidth: 360
-    implicitHeight: mainCard.height
+    implicitHeight: 640
 
     color: "transparent"
 
@@ -38,19 +38,19 @@ PanelWindow {
     }
 
     // Theme Palette (Catppuccin Mocha Tonalspot)
-    readonly property color colSurface: "#801e1d22"
-    readonly property color colSurfaceLow: "#80161519"
-    readonly property color colSurfaceHigh: "#992a292e"
-    readonly property color colSurfaceHighest: "#99353438"
-    readonly property color colText: "#e5e1e7"
-    readonly property color colTextVariant: "#c8c5d1"
-    readonly property color colOutline: "#47464f"
-    readonly property color colOutlineVariant: "#333238"
-    readonly property color colPrimary: "#c2c1ff"
-    readonly property color colTextOnPrimary: "#2a2a60"
-    readonly property color colTertiary: "#f5b2e0"
-    readonly property color colSuccess: "#B5CCBA"
-    readonly property color colError: "#ffb4ab"
+    property color colSurface: "#801e1d22"
+    property color colSurfaceLow: "#80161519"
+    property color colSurfaceHigh: "#992a292e"
+    property color colSurfaceHighest: "#99353438"
+    property color colText: "#e5e1e7"
+    property color colTextVariant: "#c8c5d1"
+    property color colOutline: "#47464f"
+    property color colOutlineVariant: "#333238"
+    property color colPrimary: "#c2c1ff"
+    property color colTextOnPrimary: "#2a2a60"
+    property color colTertiary: "#f5b2e0"
+    property color colSuccess: "#B5CCBA"
+    property color colError: "#ffb4ab"
 
     // Primary Tab: "tasks" | "agenda"
     property string currentMainTab: "tasks"
@@ -119,6 +119,35 @@ PanelWindow {
             readProc.running = true
             syncCalendarProc.running = true
             readCalendarConfigProc.running = true
+        }
+    }
+
+    Process {
+        id: themeProc
+        command: ["bash", "-c", "cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null || echo ''"]
+        stdout: SplitParser {
+            onRead: data => {
+                if (data && data.trim().length > 0) {
+                    try {
+                        var theme = JSON.parse(data)
+                        if (theme.colSurface) root.colSurface = theme.colSurface
+                        if (theme.colSurfaceLow) root.colSurfaceLow = theme.colSurfaceLow
+                        if (theme.colSurfaceHigh) root.colSurfaceHigh = theme.colSurfaceHigh
+                        if (theme.colSurfaceHighest) root.colSurfaceHighest = theme.colSurfaceHighest
+                        if (theme.colText) root.colText = theme.colText
+                        if (theme.colTextVariant) root.colTextVariant = theme.colTextVariant
+                        if (theme.colOutline) root.colOutline = theme.colOutline
+                        if (theme.colOutlineVariant) root.colOutlineVariant = theme.colOutlineVariant
+                        if (theme.colPrimary) root.colPrimary = theme.colPrimary
+                        if (theme.colTextOnPrimary) root.colTextOnPrimary = theme.colTextOnPrimary
+                        if (theme.colTertiary) root.colTertiary = theme.colTertiary
+                        if (theme.colSuccess) root.colSuccess = theme.colSuccess
+                        if (theme.colError) root.colError = theme.colError
+                    } catch (e) {
+                        console.log("Error parsing theme.json:", e)
+                    }
+                }
+            }
         }
     }
 
