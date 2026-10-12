@@ -104,7 +104,7 @@ PanelWindow {
     // Midnight rollover & periodic check timer (checks every 30 seconds)
     Timer {
         id: dayRolloverTimer
-        interval: 30000
+        interval: 60000
         running: true
         repeat: true
         onTriggered: root.checkDayRollover()
