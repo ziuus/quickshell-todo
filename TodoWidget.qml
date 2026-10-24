@@ -107,7 +107,20 @@ PanelWindow {
         interval: 60000
         running: true
         repeat: true
-        onTriggered: root.checkDayRollover()
+        onTriggered: {
+            root.checkDayRollover()
+            if (!themeProc.running) themeProc.running = true
+        }
+    }
+
+    Timer {
+        id: wallpaperWatcherTimer
+        interval: 10000
+        running: true
+        repeat: true
+        onTriggered: {
+            if (!themeProc.running) themeProc.running = true
+        }
     }
 
     // --- Process Handlers for Tasks ---
@@ -125,7 +138,7 @@ PanelWindow {
     Process {
         id: themeProc
         running: true
-        command: ["bash", "-c", "cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null | tr -d '\n'"]
+        command: ["bash", "-c", "python3 ~/.local/bin/sync-wallpaper-theme.py 2>/dev/null; cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null | tr -d '\n'"]
         stdout: SplitParser {
             onRead: data => {
                 if (data && data.trim().length > 0) {
