@@ -541,18 +541,19 @@ PanelWindow {
 
                 // Animated sliding background pill
                 Rectangle {
-                    x: root.currentMainTab === "tasks" ? 3 : parent.width / 2 + 1
+                    id: slidingPill
+                    x: root.currentMainTab === "tasks" ? 3 : Math.floor(parent.width / 2) + 1
                     y: 3
-                    width: parent.width / 2 - 4
+                    width: Math.floor(parent.width / 2) - 4
                     height: parent.height - 6
                     radius: 9
                     color: root.currentMainTab === "tasks" ? root.colPrimary : root.colTertiary
 
                     Behavior on x {
-                        NumberAnimation { duration: 280; easing.type: Easing.OutBack; easing.overshoot: 0.8 }
+                        NumberAnimation { duration: 240; easing.type: Easing.OutCubic }
                     }
                     Behavior on color {
-                        ColorAnimation { duration: 220; easing.type: Easing.OutCubic }
+                        ColorAnimation { duration: 200; easing.type: Easing.OutCubic }
                     }
                 }
 
@@ -615,19 +616,19 @@ PanelWindow {
                                 text: "calendar_month"
                                 font.family: "Material Symbols Rounded"
                                 font.pixelSize: 16
-                                color: root.currentMainTab === "agenda" ? "#2a1526" : root.colTextVariant
+                                color: root.currentMainTab === "agenda" ? root.colTextOnPrimary : root.colTextVariant
                             }
                             Text {
                                 text: "Calendar"
                                 font.pixelSize: 13
                                 font.bold: true
-                                color: root.currentMainTab === "agenda" ? "#2a1526" : root.colTextVariant
+                                color: root.currentMainTab === "agenda" ? root.colTextOnPrimary : root.colTextVariant
                             }
                             Rectangle {
                                 width: 18
                                 height: 18
                                 radius: 9
-                                color: root.currentMainTab === "agenda" ? "#2a1526" : root.colSurfaceHigh
+                                color: root.currentMainTab === "agenda" ? root.colTextOnPrimary : root.colSurfaceHigh
                                 Text {
                                     anchors.centerIn: parent
                                     text: String(root.countEvents("all"))
