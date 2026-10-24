@@ -26,15 +26,15 @@ PanelWindow {
     }
 
     implicitWidth: 360
-    implicitHeight: Math.max(100, mainCard.height)
+    implicitHeight: 640
 
     color: "transparent"
 
     mask: Region {
-        x: mainCard.x
-        y: mainCard.y
-        width: mainCard.width
-        height: mainCard.height
+        x: 0
+        y: 0
+        width: 360
+        height: 640
     }
 
     // Theme Palette (Catppuccin Mocha Tonalspot)
@@ -517,9 +517,8 @@ PanelWindow {
 
         Behavior on height {
             NumberAnimation {
-                duration: 350
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: [0.05, 0.7, 0.1, 1.0, 1.0, 1.0]
+                duration: 220
+                easing.type: Easing.OutCubic
             }
         }
 
@@ -672,9 +671,8 @@ PanelWindow {
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 320
-                            easing.type: Easing.BezierSpline
-                            easing.bezierCurve: [0.05, 0.7, 0.1, 1.0, 1.0, 1.0]
+                            duration: 200
+                            easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
@@ -1102,9 +1100,8 @@ PanelWindow {
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 320
-                            easing.type: Easing.BezierSpline
-                            easing.bezierCurve: [0.05, 0.7, 0.1, 1.0, 1.0, 1.0]
+                            duration: 200
+                            easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
