@@ -517,7 +517,7 @@ PanelWindow {
 
         Behavior on height {
             NumberAnimation {
-                duration: 220
+                duration: 260
                 easing.type: Easing.OutCubic
             }
         }
@@ -640,10 +640,7 @@ PanelWindow {
 
                         TapHandler {
                             cursorShape: Qt.PointingHandCursor
-                            onTapped: {
-                                root.currentMainTab = "agenda"
-                                syncCalendarProc.running = true
-                            }
+                            onTapped: root.currentMainTab = "agenda"
                         }
                     }
                 }
@@ -665,18 +662,20 @@ PanelWindow {
                     id: tasksView
                     width: slidingContainer.width
                     spacing: 10
-                    opacity: root.currentMainTab === "tasks" ? 1 : 0
-                    visible: opacity > 0
+                    opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
                     x: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 200
+                            duration: 260
                             easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
-                        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+                        NumberAnimation {
+                            duration: 240
+                            easing.type: Easing.OutCubic
+                        }
                     }
 
                     // Filter Icon Pills: All | Active | Done | Daily
@@ -1094,18 +1093,20 @@ PanelWindow {
                     id: agendaView
                     width: slidingContainer.width
                     spacing: 10
-                    opacity: root.currentMainTab === "agenda" ? 1 : 0
-                    visible: opacity > 0
+                    opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
                     x: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 200
+                            duration: 260
                             easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
-                        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+                        NumberAnimation {
+                            duration: 240
+                            easing.type: Easing.OutCubic
+                        }
                     }
 
                     // Filter row: Today | Upcoming | All + Sync Button (Icons)
