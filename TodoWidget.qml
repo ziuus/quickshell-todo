@@ -125,7 +125,7 @@ PanelWindow {
     Process {
         id: themeProc
         running: true
-        command: ["bash", "-c", "cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null || echo ''"]
+        command: ["bash", "-c", "cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null | tr -d '\n'"]
         stdout: SplitParser {
             onRead: data => {
                 if (data && data.trim().length > 0) {
