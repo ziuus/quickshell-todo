@@ -653,7 +653,7 @@ PanelWindow {
             Item {
                 id: slidingContainer
                 Layout.fillWidth: true
-                implicitHeight: Math.max(1, (root.currentMainTab === "tasks" ? tasksView.implicitHeight : agendaView.implicitHeight))
+                implicitHeight: Math.max(1, (root.currentMainTab === "tasks" ? tasksViewCol.implicitHeight : agendaViewCol.implicitHeight))
                 clip: true
 
                 Behavior on implicitHeight {
@@ -666,17 +666,16 @@ PanelWindow {
                 // ------------------------------------------
                 // View 1: Tasks (Today / Daily)
                 // ------------------------------------------
-                ColumnLayout {
+                Item {
                     id: tasksView
                     anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.leftMargin: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
                     width: slidingContainer.width
-                    spacing: 10
-                    enabled: root.currentMainTab === "tasks"
+                    height: tasksViewCol.implicitHeight
+                    x: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
                     opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
+                    enabled: root.currentMainTab === "tasks"
 
-                    Behavior on anchors.leftMargin {
+                    Behavior on x {
                         NumberAnimation {
                             duration: 280
                             easing.type: Easing.OutCubic
@@ -688,6 +687,11 @@ PanelWindow {
                             easing.type: Easing.OutCubic
                         }
                     }
+
+                    ColumnLayout {
+                        id: tasksViewCol
+                        anchors.fill: parent
+                        spacing: 10
 
                     // Filter Icon Pills: All | Active | Done | Daily
                     RowLayout {
@@ -1096,21 +1100,21 @@ PanelWindow {
                         }
                     }
                 }
+            }
 
                 // ------------------------------------------
                 // View 2: Agenda & Google Calendar
                 // ------------------------------------------
-                ColumnLayout {
+                Item {
                     id: agendaView
                     anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.leftMargin: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
                     width: slidingContainer.width
-                    spacing: 10
-                    enabled: root.currentMainTab === "agenda"
+                    height: agendaViewCol.implicitHeight
+                    x: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
                     opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
+                    enabled: root.currentMainTab === "agenda"
 
-                    Behavior on anchors.leftMargin {
+                    Behavior on x {
                         NumberAnimation {
                             duration: 280
                             easing.type: Easing.OutCubic
@@ -1122,6 +1126,11 @@ PanelWindow {
                             easing.type: Easing.OutCubic
                         }
                     }
+
+                    ColumnLayout {
+                        id: agendaViewCol
+                        anchors.fill: parent
+                        spacing: 10
 
                     // Filter row: Today | Upcoming | All + Sync Button (Icons)
                     RowLayout {
@@ -1961,4 +1970,5 @@ PanelWindow {
             }
         }
     }
+}
 }
