@@ -31,10 +31,7 @@ PanelWindow {
     color: "transparent"
 
     mask: Region {
-        x: mainCard.x
-        y: mainCard.y
-        width: mainCard.width
-        height: mainCard.height
+        item: mainCard
     }
 
     // Theme Palette (Catppuccin Mocha Tonalspot)
@@ -515,13 +512,6 @@ PanelWindow {
         border.width: 1
         clip: true
 
-        Behavior on height {
-            NumberAnimation {
-                duration: 260
-                easing.type: Easing.OutCubic
-            }
-        }
-
         ColumnLayout {
             id: cardLayout
             anchors.left: parent.left
@@ -653,12 +643,13 @@ PanelWindow {
             Item {
                 id: slidingContainer
                 Layout.fillWidth: true
-                implicitHeight: Math.max(1, (root.currentMainTab === "tasks" ? tasksViewCol.implicitHeight : agendaViewCol.implicitHeight))
+                Layout.preferredHeight: Math.max(1, (root.currentMainTab === "tasks" ? tasksViewCol.implicitHeight : agendaViewCol.implicitHeight))
+                height: Layout.preferredHeight
                 clip: true
 
-                Behavior on implicitHeight {
+                Behavior on Layout.preferredHeight {
                     NumberAnimation {
-                        duration: 250
+                        duration: 280
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -672,7 +663,7 @@ PanelWindow {
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 250
+                            duration: 280
                             easing.type: Easing.OutCubic
                         }
                     }
@@ -687,14 +678,6 @@ PanelWindow {
                         width: slidingContainer.width
                         height: tasksViewCol.implicitHeight
                         enabled: root.currentMainTab === "tasks"
-                        opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
-
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: 200
-                                easing.type: Easing.OutCubic
-                            }
-                        }
 
                         ColumnLayout {
                             id: tasksViewCol
@@ -1122,14 +1105,6 @@ PanelWindow {
                 width: slidingContainer.width
                 height: agendaViewCol.implicitHeight
                 enabled: root.currentMainTab === "agenda"
-                opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
-
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
-                }
 
                 ColumnLayout {
                     id: agendaViewCol
