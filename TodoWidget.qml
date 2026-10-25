@@ -26,7 +26,7 @@ PanelWindow {
     }
 
     implicitWidth: 360
-    implicitHeight: 640
+    implicitHeight: Math.max(120, mainCard.height)
 
     color: "transparent"
 
@@ -653,12 +653,12 @@ PanelWindow {
             Item {
                 id: slidingContainer
                 Layout.fillWidth: true
-                implicitHeight: (root.currentMainTab === "tasks" ? tasksView.implicitHeight : agendaView.implicitHeight)
+                implicitHeight: Math.max(1, (root.currentMainTab === "tasks" ? tasksView.implicitHeight : agendaView.implicitHeight))
                 clip: true
 
                 Behavior on implicitHeight {
                     NumberAnimation {
-                        duration: 260
+                        duration: 280
                         easing.type: Easing.OutCubic
                     }
                 }
@@ -669,21 +669,22 @@ PanelWindow {
                 ColumnLayout {
                     id: tasksView
                     anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
                     width: slidingContainer.width
                     spacing: 10
                     enabled: root.currentMainTab === "tasks"
                     opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
-                    x: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
 
-                    Behavior on x {
+                    Behavior on anchors.leftMargin {
                         NumberAnimation {
-                            duration: 260
+                            duration: 280
                             easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
                         NumberAnimation {
-                            duration: 240
+                            duration: 220
                             easing.type: Easing.OutCubic
                         }
                     }
@@ -1102,21 +1103,22 @@ PanelWindow {
                 ColumnLayout {
                     id: agendaView
                     anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
                     width: slidingContainer.width
                     spacing: 10
                     enabled: root.currentMainTab === "agenda"
                     opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
-                    x: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
 
-                    Behavior on x {
+                    Behavior on anchors.leftMargin {
                         NumberAnimation {
-                            duration: 260
+                            duration: 280
                             easing.type: Easing.OutCubic
                         }
                     }
                     Behavior on opacity {
                         NumberAnimation {
-                            duration: 240
+                            duration: 220
                             easing.type: Easing.OutCubic
                         }
                     }
