@@ -31,10 +31,10 @@ PanelWindow {
     color: "transparent"
 
     mask: Region {
-        x: 0
-        y: 0
-        width: 360
-        height: 640
+        x: mainCard.x
+        y: mainCard.y
+        width: mainCard.width
+        height: mainCard.height
     }
 
     // Theme Palette (Catppuccin Mocha Tonalspot)
@@ -656,13 +656,22 @@ PanelWindow {
                 implicitHeight: (root.currentMainTab === "tasks" ? tasksView.implicitHeight : agendaView.implicitHeight)
                 clip: true
 
+                Behavior on implicitHeight {
+                    NumberAnimation {
+                        duration: 260
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
                 // ------------------------------------------
                 // View 1: Tasks (Today / Daily)
                 // ------------------------------------------
                 ColumnLayout {
                     id: tasksView
+                    anchors.top: parent.top
                     width: slidingContainer.width
                     spacing: 10
+                    enabled: root.currentMainTab === "tasks"
                     opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
                     x: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
 
@@ -1092,8 +1101,10 @@ PanelWindow {
                 // ------------------------------------------
                 ColumnLayout {
                     id: agendaView
+                    anchors.top: parent.top
                     width: slidingContainer.width
                     spacing: 10
+                    enabled: root.currentMainTab === "agenda"
                     opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
                     x: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
 
