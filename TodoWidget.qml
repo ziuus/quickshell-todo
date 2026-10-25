@@ -138,7 +138,7 @@ PanelWindow {
     Process {
         id: themeProc
         running: true
-        command: ["bash", "-c", "python3 ~/.local/bin/sync-wallpaper-theme.py 2>/dev/null; cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null | tr -d '\n'"]
+        command: ["bash", "-c", "python3 ~/.local/bin/sync-wallpaper-theme.py >/dev/null 2>&1; cat ~/.config/quickshell-todo-widget/theme.json 2>/dev/null | tr -d '\n'"]
         stdout: SplitParser {
             onRead: data => {
                 if (data && data.trim().length > 0) {
@@ -658,40 +658,50 @@ PanelWindow {
 
                 Behavior on implicitHeight {
                     NumberAnimation {
-                        duration: 280
+                        duration: 250
                         easing.type: Easing.OutCubic
                     }
                 }
 
-                // ------------------------------------------
-                // View 1: Tasks (Today / Daily)
-                // ------------------------------------------
                 Item {
-                    id: tasksView
-                    anchors.top: parent.top
-                    width: slidingContainer.width
-                    height: tasksViewCol.implicitHeight
+                    id: slideTrack
                     x: root.currentMainTab === "tasks" ? 0 : -slidingContainer.width
-                    opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
-                    enabled: root.currentMainTab === "tasks"
+                    y: 0
+                    width: slidingContainer.width * 2
+                    height: Math.max(tasksViewCol.implicitHeight, agendaViewCol.implicitHeight)
 
                     Behavior on x {
                         NumberAnimation {
-                            duration: 280
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 220
+                            duration: 250
                             easing.type: Easing.OutCubic
                         }
                     }
 
-                    ColumnLayout {
-                        id: tasksViewCol
-                        anchors.fill: parent
-                        spacing: 10
+                    // ------------------------------------------
+                    // Page 1: Tasks (Today / Daily)
+                    // ------------------------------------------
+                    Item {
+                        id: tasksPage
+                        x: 0
+                        y: 0
+                        width: slidingContainer.width
+                        height: tasksViewCol.implicitHeight
+                        enabled: root.currentMainTab === "tasks"
+                        opacity: root.currentMainTab === "tasks" ? 1.0 : 0.0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+
+                        ColumnLayout {
+                            id: tasksViewCol
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            spacing: 10
 
                     // Filter Icon Pills: All | Active | Done | Daily
                     RowLayout {
@@ -1102,35 +1112,31 @@ PanelWindow {
                 }
             }
 
-                // ------------------------------------------
-                // View 2: Agenda & Google Calendar
-                // ------------------------------------------
-                Item {
-                    id: agendaView
+            // ------------------------------------------
+            // Page 2: Agenda & Google Calendar
+            // ------------------------------------------
+            Item {
+                id: agendaPage
+                x: slidingContainer.width
+                y: 0
+                width: slidingContainer.width
+                height: agendaViewCol.implicitHeight
+                enabled: root.currentMainTab === "agenda"
+                opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
+
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                ColumnLayout {
+                    id: agendaViewCol
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.top: parent.top
-                    width: slidingContainer.width
-                    height: agendaViewCol.implicitHeight
-                    x: root.currentMainTab === "agenda" ? 0 : slidingContainer.width
-                    opacity: root.currentMainTab === "agenda" ? 1.0 : 0.0
-                    enabled: root.currentMainTab === "agenda"
-
-                    Behavior on x {
-                        NumberAnimation {
-                            duration: 280
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 220
-                            easing.type: Easing.OutCubic
-                        }
-                    }
-
-                    ColumnLayout {
-                        id: agendaViewCol
-                        anchors.fill: parent
-                        spacing: 10
+                    spacing: 10
 
                     // Filter row: Today | Upcoming | All + Sync Button (Icons)
                     RowLayout {
@@ -1970,5 +1976,6 @@ PanelWindow {
             }
         }
     }
+}
 }
 }
