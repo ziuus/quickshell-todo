@@ -6,6 +6,11 @@ A highly polished, fully animated, desktop-embedded Wayland widget for tracking 
   <img src="assets/demo.gif" alt="Quickshell Todo Widget Demo" width="600" style="border-radius: 12px;" />
 </p>
 
+> Building this in the open — if it saves you time, a star helps others find it.
+> Found a bug, or have an idea? [Open an issue](https://github.com/ziuus/quickshell-todo/issues).
+> New here? Start with a [good first issue](https://github.com/ziuus/quickshell-todo/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+> Theme, widget, and calendar-sync ideas welcome.
+
 ## Features
 - **Ultra-Low Resource Footprint**: True **0.0% idle CPU** and **~26 MB RAM** via Vulkan rendering (`QSG_RHI_BACKEND=vulkan`) with static idle budget.
 - **Smart Daily Habits Rollover**: Daily recurring tasks automatically reset and uncheck at midnight live without restarting the widget.
